@@ -11,28 +11,21 @@ var io = socketIO(server);
 
 app.use(express.static(publicPath));
 
+//io.emit connects to every single connection
+//socket.emit connects to only single connection
 io.on('connection', (socket)=>{
 	console.log('New User Connected');
 
-	/*socket.emit('newEmail', { //object
-		from : 'swapnil@example.com',
-		text : 'Supppp',
-		createdAt: 123	
-	});
-
-	socket.on('createEmail', (newEmail)=>{
-		console.log('createEmail',newEmail);
-	});*/
-
 	//Chat App
-	socket.emit('newMessage', {
-		from: 'Peter',
-		text : 'Its Pizza Time',
-		createdAt : 123
-	});
 
 	socket.on('createMessage', (newMessage)=>{
 		console.log('createMessage',newMessage);
+
+		io.emit('newMessage', {
+			from : newMessage.from,
+			text : newMessage.text,
+			createdAt : new Date().getTime()
+		});
 	});
 
 	socket.on('disconnect', ()=>{

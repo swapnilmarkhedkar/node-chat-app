@@ -2,18 +2,6 @@ var socket = io();
 
 socket.on('connect', function(){
 	console.log('Connected to Server');
-
-	//inside 'connect'
-	/*socket.emit('createEmail',{
-		to : 'abc@example.com',
-		text : 'Petting Cats'
-	});*/
-
-
-	socket.emit('createMessage', {
-		from : 'Tony',
-		text : 'You dont Deserve the suit'
-	});
 });
 
 socket.on('disconnect', function(){
@@ -25,6 +13,6 @@ socket.on('disconnect', function(){
 });*/ 
 
 //Message
-socket.on('newMessage', function(Message){
+socket.on('newMessage', function(Message){//listener; needs an emit
 	console.log('New Message', Message);
 });
