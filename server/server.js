@@ -40,7 +40,7 @@ io.on('connection', (socket)=>{
 			text : newMessage.text,
 			createdAt : new Date().getTime()
 		});
-		callback('This is From the Server');
+		callback();
 	});
 
 	socket.on('createLocationMessage', (coords)=>{
