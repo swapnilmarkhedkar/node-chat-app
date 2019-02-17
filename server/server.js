@@ -4,6 +4,7 @@ const express= require('express');
 const socketIO = require('socket.io');
 
 const publicPath = path.join(__dirname, '../public');
+const {generateLocationMessage} = require('./utils/message');
 const port = process.env.PORT || 3000;
 var app=express();
 var server = http.createServer((app));
@@ -31,7 +32,7 @@ io.on('connection', (socket)=>{
 	})
 
 	//Chat App
-	socket.on('createMessage', (newMessage)=>{
+	socket.on('createMessage', (newMessage,callback)=>{
 		console.log('createMessage',newMessage);
 
 		io.emit('newMessage', {
@@ -39,16 +40,11 @@ io.on('connection', (socket)=>{
 			text : newMessage.text,
 			createdAt : new Date().getTime()
 		});
+		callback('This is From the Server');
+	});
 
-		//broadcast to everyone but myself
-
-		// socket.broadcast.emit('newMessage', {
-		// 	from : newMessage.from,
-		// 	text : newMessage.text,
-		// 	createdAt : new Date().getTime()
-		// });
-
-		
+	socket.on('createLocationMessage', (coords)=>{
+		io.emit('newLocationMessage', generateLocationMessage('Admin',coords.latitude, coords.longitude));
 	});
 
 	socket.on('disconnect', ()=>{
