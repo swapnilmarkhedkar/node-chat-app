@@ -1,4 +1,4 @@
-# node-course-chat-app
+# Chat App
 
 Live : https://aqueous-ravine-53004.herokuapp.com/
 
